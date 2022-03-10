@@ -9,7 +9,6 @@ from sklearn.metrics import (precision_score, recall_score)
 __all__ = ['pairwise', 'bcubed', 'nmi', 'precision', 'recall', 'accuracy', 'new_metrics']
 
 
-
 def _check(gt_labels, pred_labels):
     if gt_labels.ndim != 1:
         raise ValueError("gt_labels must be 1D: shape is %r" %
@@ -45,7 +44,6 @@ def fowlkes_mallows_score(gt_labels, pred_labels, sparse=True):
     tk = np.dot(c.data, c.data) - n_samples
     pk = np.sum(np.asarray(c.sum(axis=0)).ravel()**2) - n_samples
     qk = np.sum(np.asarray(c.sum(axis=1)).ravel()**2) - n_samples
-    # print(tk, pk, qk)
     avg_pre = tk / pk
     avg_rec = tk / qk
     fscore = _compute_fscore(avg_pre, avg_rec)
