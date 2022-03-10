@@ -1,0 +1,7 @@
+*.npy
+*.pth
+*.pyc
+*.xml
+*.iml
+*.log
+*.csv
