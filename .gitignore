@@ -5,4 +5,7 @@
 *.iml
 *.log
 *.csv
+*.npz
+*.meta
+*.txt
 .idea/*
