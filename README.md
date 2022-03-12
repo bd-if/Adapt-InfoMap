@@ -14,11 +14,15 @@ Here we present the source codes for FaceMap. FaceMap is an effective unsupervis
 ```
 cd FaceMap
 ```
+
 Create a new folder for data:
+
 ```
 mkdir data
 ```
+
 To run the code, please download the refined MS1M dataset and partition it into 10 splits, then construct the data directory as follows:
+
 ```
 |——data
    |——MS1M
@@ -47,9 +51,11 @@ To run the code, please download the refined MS1M dataset and partition it into 
           |——part0_train.txt
           |——part1_test.txt
 ```
+
 We have used MS1M from: https://github.com/yl-1993/learn-to-cluster.
 
 CASIA and VGG can be downloaded from [Google Drive]() or [BaiduYunPan]()[password: xxxx]
+
 
 ##Run
 
