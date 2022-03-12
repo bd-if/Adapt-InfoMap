@@ -1,7 +1,7 @@
 # FaceMap
 Here we present the source codes for FaceMap. FaceMap is an effective unsupervised method on large-scale dataset for face clustering. The paper can be found [here](./ECCV2022-FaceMap.pdf). 
 
-![FaceMap-framework](./FaceMap_framework.jpg)
+![FaceMap-framework](./FaceMap-framework.png)
 
 ## Requirements 
  - python=3.7
