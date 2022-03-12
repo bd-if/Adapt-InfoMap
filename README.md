@@ -2,15 +2,13 @@
 Here we present the source codes for FaceMap. FaceMap is an effective unsupervised method on large-scale dataset for face clustering. The paper can be found [here]().
 
 
-##Requirements
-
+## Requirements 
  - python=3.7
  - infomap=1.9.0
  - faiss
 
 
-##Datasets
-
+## Datasets 
 ```
 cd FaceMap
 ```
@@ -57,16 +55,14 @@ We have used MS1M from: https://github.com/yl-1993/learn-to-cluster.
 CASIA and VGG can be downloaded from [Google Drive]() or [BaiduYunPan]()[password: xxxx]
 
 
-##Run
-
+## Run 
 Adjust the configuration in ```./configs/config.py```, then run the algorithm as follows:
 ```
 cd FaceMap
 python main.py
 ```
 
-##Evaluation
-
+## Evaluation 
 ```
 cd FaceMap
 python main_eval.py
