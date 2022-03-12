@@ -34,14 +34,20 @@ def faiss_knn(feat_path, knn_path, feat_dim, k=256):
     feat = l2norm(feat)
 
     index = faiss.IndexFlatIP(feat_dim)
+
+    # use single gpu
     res = faiss.StandardGpuResources()
     index = faiss.index_cpu_to_gpu(res, 0, index)
-    # index = faiss.index_cpu_to_all_gpus(index1)
+
+    # use all gpus
+    # index = faiss.index_cpu_to_all_gpus(index)
+
     index.add(feat)
     batch_size = 200000
     n = int(np.ceil(feat.shape[0] / batch_size))
     sims = np.array([], dtype=np.float16).reshape(-1, k+1)
     nbrs = np.array([], dtype=np.uint32).reshape(-1, k+1)
+
     for i in tqdm(range(n)):
         start = i * batch_size
         end = (i+1) * batch_size
@@ -49,8 +55,20 @@ def faiss_knn(feat_path, knn_path, feat_dim, k=256):
         sim, nbr = index.search(query, k+1)
         sims = np.vstack((sims, sim))
         nbrs = np.vstack((nbrs, nbr))
+
+    # remove itself
+    for i in range(nbrs.shape[0]):
+        if i == nbrs[i, 0]:
+            pass
+        else:
+            for j, x in enumerate(nbrs[i, 1:]):
+                if i == x:
+                    nbrs[i, 1:j+1] = nbrs[i, :j]
+                    sims[i, 1:j+1] = sims[i, :j]
+                    break
     sims = sims[:, 1:]
     nbrs = nbrs[:, 1:]
+
     x = [(np.array(nbr, dtype=np.uint32), np.array(sim, dtype=np.float32)) for nbr, sim in zip(nbrs, sims)]
     np.savez_compressed(knn_path, data=np.array(x))
     return nbrs, sims

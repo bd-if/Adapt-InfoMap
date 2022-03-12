@@ -131,10 +131,10 @@ def new_metrics(gt_labels, pred_labels, sparse=True):
             IDTP[i] += np.sum((pre > th) & (rec > th))
     IDFP = pred_cluster_num - IDTP
     IDFN = true_class_num - IDTP
-    pre = IDTP / pred_cluster_num
-    rec = IDTP / true_class_num
+    avg_pre = IDTP / pred_cluster_num
+    avg_rec = IDTP / true_class_num
     identityF1 = 2 * IDTP / (2 * IDTP + IDFP + IDFN)
 
     for i, th in enumerate(theta):
         print('theta:{}, avg_pre:{:.4f}, avg_rec:{:.4f}, Identity F-score:{:.4f}'
-              .format(th, pre[i], rec[i], identityF1[i]))
+              .format(th, avg_pre[i], avg_rec[i], identityF1[i]))
