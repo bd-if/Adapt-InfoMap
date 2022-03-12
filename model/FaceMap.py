@@ -59,6 +59,23 @@ class FaceMap():
             self.nbrs, self.sims = faiss_knn(self.feat_path, self.knn_path, self.feat_dim, self.topK)
         print('time cost of load knn: {:.2f}s'.format(time() - t0))
 
+    def transition_prob_by_threshold(self, th=0.62):
+        single, links, weights = [], [], []
+        for i in tqdm(range(self.nbrs.shape[0])):
+            c = 0
+            for j, nbr in enumerate(self.nbrs[i]):
+                if self.sims[i, j] >= th:
+                    c += 1
+                    links.append((i, nbr))
+                    weights.append(self.sims[i, j])
+                else:
+                    break
+            if c == 0:
+                single.append(i)
+        self.links = np.array(links, dtype=np.uint32)
+        self.weights = np.array(weights, dtype=np.float32)
+        self.single = np.array(single, dtype=np.uint32)
+
     def adjust_transition_prob(self):
         p = self.sims / np.sum(self.sims, axis=1, keepdims=True)
         t0 = time()
