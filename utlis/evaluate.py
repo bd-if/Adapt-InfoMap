@@ -1,10 +1,10 @@
 
 import numpy as np
-from utlis import metric
+from utlis import metrics
 from configs import config
 
 
-def evaluate(metrics):
+def evaluate(metric):
     file = config.result_path
     label_path = config.label_path
     pred_labels = np.load(file)
@@ -16,6 +16,6 @@ def evaluate(metrics):
 
     print('#cls:{}, pred:{}'.format(len(np.unique(gt_labels)), len(np.unique(pred_labels))))
 
-    for met in metrics:
-        metric_func = metric.__dict__[met]
+    for met in metric:
+        metric_func = metrics.__dict__[met]
         metric_func(gt_labels, pred_labels)

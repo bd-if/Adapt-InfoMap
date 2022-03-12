@@ -82,7 +82,6 @@ def bcubed(gt_labels, pred_labels):
 
             pre[i] += n ** 2 / len(pred_idxs)
             rec[i] += n**2 / gt_num[i]
-    # print('singleton:', s1)
 
     gt_num = gt_num.sum()
     avg_pre = pre.sum() / gt_num
@@ -90,53 +89,6 @@ def bcubed(gt_labels, pred_labels):
     fscore = _compute_fscore(avg_pre, avg_rec)
     print('bcubed: avg_pre:{:.4f}, avg_rec:{:.4f}, fscore:{:.4f}'.format(avg_pre, avg_rec, fscore))
     return avg_pre, avg_rec, fscore
-
-
-def new_metrics(gt_labels, pred_labels, sparse=True):
-
-    c = contingency_matrix(gt_labels, pred_labels, sparse=sparse)
-
-    true_class = np.asarray(c.sum(axis=1)).ravel()
-    pred_cluster = np.asarray(c.sum(axis=0)).ravel()
-    true_class_num = true_class.shape[0]
-    pred_cluster_num = pred_cluster.shape[0]
-
-    print('R#s: {:.4f}'.format(np.sum(c.sum(axis=0) <= 1) / true_class_num))
-    print('R#i: {}/{}={:.4f}'.format(pred_cluster_num, true_class_num, pred_cluster_num/true_class_num))
-
-    IDTP1, IDTP2, IDTP3, IDTP4, IDTP5 = 0,0,0,0,0
-
-    for j in range(c.shape[1]):
-        x = c[:, j]
-        pre = x.data / pred_cluster[j]
-        rec = x.toarray().ravel() / true_class
-        rec = rec[rec > 0.0]
-
-        IDTP1 += np.sum((pre > 0.5) & (rec > 0.5))
-        IDTP2 += np.sum((pre > 0.6) & (rec > 0.6))
-        IDTP3 += np.sum((pre > 0.7) & (rec > 0.7))
-        IDTP4 += np.sum((pre > 0.8) & (rec > 0.8))
-        IDTP5 += np.sum((pre > 0.9) & (rec > 0.9))
-
-    IDFP1 = pred_cluster_num - IDTP1
-    IDFP2 = pred_cluster_num - IDTP2
-    IDFP3 = pred_cluster_num - IDTP3
-    IDFP4 = pred_cluster_num - IDTP4
-    IDFP5 = pred_cluster_num - IDTP5
-    IDFN1 = true_class_num - IDTP1
-    IDFN2 = true_class_num - IDTP2
-    IDFN3 = true_class_num - IDTP3
-    IDFN4 = true_class_num - IDTP4
-    IDFN5 = true_class_num - IDTP5
-    IDF11 = IDTP1/(IDTP1+IDFP1/2+IDFN1/2)
-    IDF12 = IDTP2/(IDTP2+IDFP2/2+IDFN2/2)
-    IDF13 = IDTP3/(IDTP3+IDFP3/2+IDFN3/2)
-    IDF14 = IDTP4/(IDTP4+IDFP4/2+IDFN4/2)
-    IDF15 = IDTP5/(IDTP5+IDFP5/2+IDFN5/2)
-
-    print('IDTF: (0.5):{}, (0.6):{}, (0.7):{}, (0.8):{}, (0.9):{}'.format(IDTP1,IDTP2,IDTP3,IDTP4,IDTP5))
-    print('IDF1: (0.5):{:.4f}, (0.6):{:.4f}, (0.7):{:.4f}, (0.8):{:.4f}, (0.9):{:.4f}'
-          .format(IDF11,IDF12,IDF13,IDF14,IDF15))
 
 
 def nmi(gt_labels, pred_labels):
@@ -153,3 +105,36 @@ def recall(gt_labels, pred_labels):
 
 def accuracy(gt_labels, pred_labels):
     return np.mean(gt_labels == pred_labels)
+
+
+def new_metrics(gt_labels, pred_labels, sparse=True):
+    theta = [0.5, 0.6, 0.7, 0.8, 0.9]
+
+    c = contingency_matrix(gt_labels, pred_labels, sparse=sparse)
+    true_class = np.asarray(c.sum(axis=1)).ravel()
+    pred_cluster = np.asarray(c.sum(axis=0)).ravel()
+    true_class_num = true_class.shape[0]
+    pred_cluster_num = pred_cluster.shape[0]
+    singleton = np.sum(c.sum(axis=0) <= 1)
+    Rs = singleton / true_class_num
+    Ri = pred_cluster_num / true_class_num
+    print('Singleton:{}, R#s: {:.4f}'.format(singleton, Rs))
+    print('R#i: {}/{}={:.4f}'.format(pred_cluster_num, true_class_num, Ri))
+
+    IDTP = np.repeat(0, len(theta))
+    for j in range(c.shape[1]):
+        x = c[:, j]
+        pre = x.data / pred_cluster[j]
+        rec = x.toarray().ravel() / true_class
+        rec = rec[rec > 0.]
+        for i, th in enumerate(theta):
+            IDTP[i] += np.sum((pre > th) & (rec > th))
+    IDFP = pred_cluster_num - IDTP
+    IDFN = true_class_num - IDTP
+    pre = IDTP / pred_cluster_num
+    rec = IDTP / true_class_num
+    identityF1 = 2 * IDTP / (2 * IDTP + IDFP + IDFN)
+
+    for i, th in enumerate(theta):
+        print('theta:{}, avg_pre:{:.4f}, avg_rec:{:.4f}, Identity F-score:{:.4f}'
+              .format(th, pre[i], rec[i], identityF1[i]))
