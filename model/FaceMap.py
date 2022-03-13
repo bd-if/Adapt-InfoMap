@@ -1,11 +1,4 @@
-# -*- coding: utf-8 -*- 
-"""
-
-@Project: FaceClustering
-@Author: intellif
-Create time: 2022-03-07 15:47
-
-"""
+# -*- coding: utf-8 -*-
 
 import os
 from time import time

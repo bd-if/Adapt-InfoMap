@@ -1,11 +1,4 @@
-# -*- coding: utf-8 -*- 
-"""
-
-@Project: faceClustering
-@Author: intellif
-Create time: 2021-12-16 16:05
-
-"""
+# -*- coding: utf-8 -*-
 
 import numpy as np
 import faiss
