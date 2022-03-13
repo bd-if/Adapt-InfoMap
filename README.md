@@ -40,15 +40,15 @@ To run the code, please download the refined MS1M dataset and partition it into 
           |——part0_train.npy
           |——part1_test.npy
        |——labels
-          |——part0_train.txt
-          |——part1_test.txt
+          |——part0_train.meta
+          |——part1_test.meta
    |——VGG
        |——features
           |——part0_train.npy
           |——part1_test.npy
        |——labels
-          |——part0_train.txt
-          |——part1_test.txt
+          |——part0_train.meta
+          |——part1_test.meta
 ```
 
 We have used MS1M from: https://github.com/yl-1993/learn-to-cluster.

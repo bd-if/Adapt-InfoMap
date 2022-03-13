@@ -41,8 +41,8 @@ class FaceMap():
         self.feat_path = config.feat_path
         self.feat_dim = config.feat_dim
         self.result_path = config.result_path
-        os.makedirs(self.knn_path, exist_ok=True)
-        os.makedirs(self.result_path, exist_ok=True)
+        os.makedirs(os.path.split(self.knn_path)[0], exist_ok=True)
+        os.makedirs(os.path.split(self.result_path)[0], exist_ok=True)
         self._load_knn()
         self.t = time()
 

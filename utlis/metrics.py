@@ -5,6 +5,8 @@ from __future__ import division
 import numpy as np
 from sklearn.metrics.cluster import (contingency_matrix, normalized_mutual_info_score)
 from sklearn.metrics import (precision_score, recall_score)
+import warnings
+warnings.filterwarnings('ignore')
 
 __all__ = ['pairwise', 'bcubed', 'nmi', 'precision', 'recall', 'accuracy', 'new_metrics']
 
@@ -53,7 +55,7 @@ def fowlkes_mallows_score(gt_labels, pred_labels, sparse=True):
 def pairwise(gt_labels, pred_labels, sparse=True):
     _check(gt_labels, pred_labels)
     avg_pre, avg_rec, fscore = fowlkes_mallows_score(gt_labels, pred_labels, sparse)
-    print('pairwise: avg_pre:{:.4f}, avg_rec:{:.4f}, fscore:{:.4f}'.format(avg_pre, avg_rec, fscore))
+    print('#pairwise: avg_pre:{:.4f}, avg_rec:{:.4f}, fscore:{:.4f}'.format(avg_pre, avg_rec, fscore))
     return avg_pre, avg_rec, fscore
 
 
@@ -87,7 +89,7 @@ def bcubed(gt_labels, pred_labels):
     avg_pre = pre.sum() / gt_num
     avg_rec = rec.sum() / gt_num
     fscore = _compute_fscore(avg_pre, avg_rec)
-    print('bcubed: avg_pre:{:.4f}, avg_rec:{:.4f}, fscore:{:.4f}'.format(avg_pre, avg_rec, fscore))
+    print('#bcubed: avg_pre:{:.4f}, avg_rec:{:.4f}, fscore:{:.4f}'.format(avg_pre, avg_rec, fscore))
     return avg_pre, avg_rec, fscore
 
 
@@ -118,7 +120,7 @@ def new_metrics(gt_labels, pred_labels, sparse=True):
     singleton = np.sum(c.sum(axis=0) <= 1)
     Rs = singleton / true_class_num
     Ri = pred_cluster_num / true_class_num
-    print('Singleton:{}, R#s: {:.4f}'.format(singleton, Rs))
+    print('#Singleton:{}, R#s: {:.4f}'.format(singleton, Rs))
     print('R#i: {}/{}={:.4f}'.format(pred_cluster_num, true_class_num, Ri))
 
     IDTP = np.repeat(0, len(theta))
@@ -136,5 +138,5 @@ def new_metrics(gt_labels, pred_labels, sparse=True):
     identityF1 = 2 * IDTP / (2 * IDTP + IDFP + IDFN)
 
     for i, th in enumerate(theta):
-        print('theta:{}, avg_pre:{:.4f}, avg_rec:{:.4f}, Identity F-score:{:.4f}'
+        print('#theta:{}, avg_pre:{:.4f}, avg_rec:{:.4f}, Identity F-score:{:.4f}'
               .format(th, avg_pre[i], avg_rec[i], identityF1[i]))
