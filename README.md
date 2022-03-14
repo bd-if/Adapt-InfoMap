@@ -19,8 +19,7 @@ Create a new folder for data:
 ```
 mkdir data
 ```
-
-To run the code, please download the refined MS1M dataset and partition it into 10 splits, then construct the data directory as follows:
+To test our code with the refined MS1M dataset, please follow the link https://github.com/yl-1993/learn-to-cluster to download the dataset and put it in the directory ```/data``` as follow:
 
 ```
 |——data
@@ -37,8 +36,6 @@ To run the code, please download the refined MS1M dataset and partition it into 
           |——part9_test.meta
 ```
 
-We have used MS1M from: https://github.com/yl-1993/learn-to-cluster.
-
 ## Run 
 Adjust the configuration in ```./configs/config.py```, then run the algorithm as follows:
 ```
@@ -51,3 +48,6 @@ python main.py
 cd FaceMap
 python main_eval.py
 ```
+
+## Pre-trained Face model
+To reproduce our experiments for CASIA and VGGFace2, please use the pre-trained ArcFace model in https://github.com/deepinsight/insightface/tree/master/model_zoo to extract features.
