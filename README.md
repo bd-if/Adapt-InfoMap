@@ -36,8 +36,10 @@ To test our code with the refined MS1M dataset, please follow the link https://g
           |——part9_test.meta
 ```
 
+## Configs
+To set the configurations, modify the parameters in ```./configs/config.py```.
+
 ## Run 
-Adjust the configuration in ```./configs/config.py```, then run the algorithm as follows:
 ```
 cd FaceMap
 python main.py
