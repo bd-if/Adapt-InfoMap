@@ -35,26 +35,9 @@ To run the code, please download the refined MS1M dataset and partition it into 
           |——part1_test.meta
           |——...
           |——part9_test.meta
-   |——CASIA
-       |——features
-          |——part0_train.npy
-          |——part1_test.npy
-       |——labels
-          |——part0_train.meta
-          |——part1_test.meta
-   |——VGG
-       |——features
-          |——part0_train.npy
-          |——part1_test.npy
-       |——labels
-          |——part0_train.meta
-          |——part1_test.meta
 ```
 
 We have used MS1M from: https://github.com/yl-1993/learn-to-cluster.
-
-CASIA and VGG can be downloaded from [Google Drive]() or [BaiduYunPan]()[password: xxxx]
-
 
 ## Run 
 Adjust the configuration in ```./configs/config.py```, then run the algorithm as follows:
