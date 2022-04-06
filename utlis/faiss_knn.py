@@ -38,7 +38,7 @@ def faiss_knn(feat_path, knn_path, feat_dim, k=256):
     index.add(feat)
     batch_size = 200000
     n = int(np.ceil(feat.shape[0] / batch_size))
-    sims = np.array([], dtype=np.float16).reshape(-1, k+1)
+    sims = np.array([], dtype=np.float32).reshape(-1, k+1)
     nbrs = np.array([], dtype=np.uint32).reshape(-1, k+1)
 
     for i in tqdm(range(n)):
