@@ -24,7 +24,7 @@ def outlier_detect(delta_p, window_size):
     return q_star
 
 
-class FaceMap():
+class AdaptInfoMap():
 
     def __init__(self):
         self.omega = config.window_size

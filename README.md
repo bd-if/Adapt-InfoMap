@@ -1,7 +1,7 @@
-# FaceMap
-Here we present the source codes for FaceMap. FaceMap is an effective unsupervised method on large-scale dataset for face clustering. The paper can be found [here](./FaceMap.pdf). 
+# Adapt-InfoMap
+Here we present the source codes for Adapt-InfoMap. Adapt-InfoMap is an effective unsupervised method on large-scale dataset for face clustering. 
 
-![FaceMap-framework](./FaceMap-framework.png)
+![Adapt-InfoMap-framework](Adapt-InfoMap-framework.png)
 
 ## Requirements 
  - python=3.7
@@ -11,7 +11,7 @@ Here we present the source codes for FaceMap. FaceMap is an effective unsupervis
 
 ## Datasets 
 ```
-cd FaceMap
+cd Adapt-InfoMap
 ```
 
 Create a new folder for data:
@@ -41,13 +41,13 @@ To set the configurations, modify the parameters in ```./configs/config.py```.
 
 ## Run 
 ```
-cd FaceMap
+cd Adapt-InfoMap
 python main.py
 ```
 
 ## Evaluation 
 ```
-cd FaceMap
+cd Adapt-InfoMap
 python main_eval.py
 ```
 

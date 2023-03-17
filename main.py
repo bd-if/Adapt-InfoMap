@@ -1,9 +1,9 @@
 
-from model.FaceMap import FaceMap
+from model.AdaptInfoMap import AdaptInfoMap
 
 
 if __name__ == '__main__':
 
-    face_map = FaceMap()
-    face_map.adjust_transition_prob()
-    face_map.face_cluster()
+    adapt_info = AdaptInfoMap()
+    adapt_info.adjust_transition_prob()
+    adapt_info.face_cluster()
